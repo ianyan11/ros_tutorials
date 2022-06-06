@@ -1,0 +1,18 @@
+<launch >
+    <!-- Vehicle's initial pose -->
+    <arg name="x" default ="0"/>
+    <arg name="y" default ="0"/>
+    <arg name="z" default ="0.2"/>
+    <arg name="roll" default ="0"/>
+    <arg name="pitch" default ="0"/>
+    <arg name="yaw" default ="0"/>
+    <arg name="model" default ="differential_drive.urdf" />
+    <param name="robot_description" textfile ="$(find ros_sim)/urdf/$(arg model)" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+    <include file="$(find gazebo_ros)/launch/empty_world.launch" />
+    
+    <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn ="false" output ="screen"
+        args="-urdf -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg roll) -P $(arg pitch) -Y $(arg yaw) -model $(arg model) -param
+        /robot_description" />
+</launch >
