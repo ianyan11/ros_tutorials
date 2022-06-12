@@ -8,7 +8,9 @@
     <arg name="yaw" default ="0"/>
     <arg name="model" default ="differential_drive.urdf" />
     <param name="robot_description" textfile ="$(find ros_sim)/urdf/$(arg model)" />
+
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+    
     <include file="$(find gazebo_ros)/launch/empty_world.launch" />
     
     <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->

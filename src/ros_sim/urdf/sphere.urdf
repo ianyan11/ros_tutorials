@@ -1,0 +1,29 @@
+<!--static 20cm red Sphere for Gazebo-->
+<link name="sphere_link">
+    <visual>
+        <geometry>
+        <sphere radius="0.2"/>
+        </geometry>
+        <material name="red">
+        <color rgba="1 0 0 1"/>
+        </material>
+    </visual>
+    <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+        <sphere radius="0.2"/>
+        </geometry>
+    </collision>
+    <inertial>
+        <mass value="1"/>
+        <inertia ixx="0.010833333" ixy="0" ixz="0"
+        iyy="0.010833333" iyz="0"
+        izz="0.005" />
+    </inertial>
+</link>
+
+<!-- Gazebo adaptation-->
+<gazebo reference="sphere_link">
+    <material>Gazebo/Red</material>
+</gazebo>
+
