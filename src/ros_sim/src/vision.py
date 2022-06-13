@@ -30,8 +30,11 @@ class Vision:
         res = cv2.bitwise_and(image,image,mask = mask)
         #add text to image
         font = cv2.FONT_HERSHEY_SIMPLEX
-        cv2.putText(res, "Linear: " + str(self.linear), (0,30), font, 1, (255,255,255), 1, cv2.LINE_AA)
-        cv2.putText(res, "Orientation: " + str(self.orientation), (0,60), font, 1, (255,255,255), 1, cv2.LINE_AA)
+        cv2.putText(res, "Linear X: " + str("{:.2f}".format(self.linear.x)) + " Y: " + str("{:.2f}".format(self.linear.y))+ " Z: "+ str("{:.2f}".format(self.linear.z)),(0,30), font, 1, (255,255,255), 1, cv2.LINE_AA)
+
+        cv2.putText(res, "Orientation X: " + str("{:.2f}".format(self.orientation.x)) + " Y: " + str("{:.2f}".format(self.orientation.y)) + 
+            " Z: "+ str("{:.2f}".format(self.orientation.z)) + " W: " + str("{:.2f}".format(self.orientation.w)),
+            (0,60), font, 1, (255,255,255), 1, cv2.LINE_AA)
 
         self.image_publisher.publish(self.bridge.cv2_to_imgmsg(res, "bgr8"))
 

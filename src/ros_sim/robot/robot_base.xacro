@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<robot name="differential_drive" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find ros_sim)/urdf/base.xacro" />
+    <xacro:include filename="$(find ros_sim)/urdf/wheel.xacro" />
+    <xacro:include filename="$(find ros_sim)/urdf/sensors.xacro" />
+    <xacro:include filename="$(find ros_sim)/urdf/robot_base.gazebo" />
+    <link name="world">
+        <pose>0 0 0 0 0 0</pose>
+    </link>
+    <xacro:base/>
+    <xacro:wheel prefix="left" reflect="1"/>
+    <xacro:wheel prefix="right" reflect="-1"/>
+    <xacro:camera_sensor/>
+    <xacro:imu_sensor/>
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        </plugin>
+    </gazebo>
+    <joint name="base_link_to_chassis" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+    </joint>
+    <gazebo reference="base_link">
+        <material>Gazebo/Blue</material>
+        <mu1>0.01</mu1>
+        <mu2>0.01</mu2>
+    </gazebo>
+</robot>

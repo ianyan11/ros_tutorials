@@ -6,15 +6,30 @@
     <arg name="roll" default ="0"/>
     <arg name="pitch" default ="0"/>
     <arg name="yaw" default ="0"/>
+    <!-- 
     <arg name="model" default ="differential_drive.urdf" />
     <param name="robot_description" textfile ="$(find ros_sim)/urdf/$(arg model)" />
 
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
     
     <include file="$(find gazebo_ros)/launch/empty_world.launch" />
+    -->
     
+    <arg name="model" default="robot_base.xacro"/>
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find ros_sim)/robot/$(arg model)"/>
+    <!-- Start 3 nodes: joint_state_publisher, robot_state_publisher and rviz -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+    <node name="rviz" pkg="rviz" type="rviz"  args="-d $(find ros_sim)/rviz/xacro.rviz"/>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch" />
+
     <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn ="false" output ="screen"
         args="-urdf -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg roll) -P $(arg pitch) -Y $(arg yaw) -model $(arg model) -param
         /robot_description" />
+    
+    <rosparam file="$(find ros_sim)/yaml/diff_control.yaml" command="load"/>
+
+
 </launch >
